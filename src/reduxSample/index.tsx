@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface HelloProps { compiler: string; framework: string; }
+interface HelloProps { compiler: string; framework: string; }
 
 export default class Hello extends React.Component<HelloProps, {}> {
     render() {
