@@ -7,7 +7,7 @@ module.exports = {
     library: 'Trial',
     libraryTarget: 'umd'
   },
-  //devtool: "source-map",
+  devtool: "source-map",
   resolve: {
     extensions:['.ts','.tsx','.js']
   },
@@ -18,7 +18,7 @@ module.exports = {
         loader: 'ts-loader',
         exclude: /node_modules/
       },
-      //{ enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
   },
   externals: {

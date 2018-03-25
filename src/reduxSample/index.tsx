@@ -1,9 +1,109 @@
 import React from "react";
+import { createStore, Action, Reducer } from 'redux';
+import { Provider, connect } from 'react-redux';
 
-interface HelloProps { compiler: string; framework: string; }
+type Actions = fetchAction;
 
-export default class Hello extends React.Component<HelloProps, {}> {
-    render() {
-        return <h1>Helloo from {this.props.compiler} and {this.props.framework}!</h1>;
-    }
+enum ActionTypes {
+  RECEIVE_FETCH_DATA = 'RECEIVE_FETCH_DATA'
+}
+
+interface fetchAction extends Action {
+  type: ActionTypes.RECEIVE_FETCH_DATA;
+  response: any;
+}
+
+const fetchData = (json: any): fetchAction => ({
+  type: ActionTypes.RECEIVE_FETCH_DATA, response: json
+})
+
+
+const fetchApiData = (dispatch: any) => {
+
+  return fetch('http://localhost:3000/example/a', {credentials: 'same-origin'})
+           .then(response => {
+             if (response.status < 400) {
+               return response.json().then((json)=>dispatch(fetchData(json)));
+             } else {
+               console.log(response);
+             }
+           })
+}
+
+interface AppProps {
+
+  fetchData: any;
+  dispatch: any;
+
+}
+
+class App extends React.Component<AppProps, {}> {
+
+  constructor(props: AppProps) {
+
+    super(props);
+
+  }
+
+  componentWillMount() {
+
+    const {dispatch} = this.props;
+
+    fetchApiData(dispatch);
+
+  }
+
+  render(){
+
+    const fetchData = this.props.fetchData;
+
+    return <div>
+            <div>{JSON.stringify(fetchData)}</div>
+            <p>aaa</p>
+           </div>
+
+  }
+}
+
+const mapStateToProps = (state: State) => ({ fetchData:state.fetchData });
+
+const TotalApp = connect(mapStateToProps)(App);
+
+interface State {
+
+  fetchData: any
+
+}
+
+const initialState: State = {
+  fetchData:{}
+};
+
+const reducer = (state:State=initialState, action: Actions | any):State => {
+
+  switch (action.type) {
+
+    case ActionTypes.RECEIVE_FETCH_DATA:
+
+      return { ...state, fetchData: action.response};
+
+    default:
+
+      return state;
+
+  }
+
+}
+
+
+const store = createStore( reducer );
+
+export default class example extends React.Component<{}, {}> {
+
+  render() {
+
+    return <Provider store={store}><TotalApp /></Provider>
+
+  }
+
 }

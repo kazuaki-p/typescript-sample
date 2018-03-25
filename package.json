@@ -4,9 +4,13 @@
   "description": "for developer",
   "main": "index.js",
   "dependencies": {
-    "@types/react": "^16.0.40"
+    "react": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
+    "@types/react": "^16.0.41",
+    "@types/react-redux": "^5.0.15",
     "source-map-loader": "^0.2.3",
     "ts-loader": "^4.1.0",
     "typescript": "^2.7.2",
