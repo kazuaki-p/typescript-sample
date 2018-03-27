@@ -11,6 +11,8 @@
   "devDependencies": {
     "@types/react": "^16.0.41",
     "@types/react-redux": "^5.0.15",
+    "mobx": "^4.1.0",
+    "mobx-react": "^5.0.0",
     "source-map-loader": "^0.2.3",
     "ts-loader": "^4.1.0",
     "typescript": "^2.7.2",
