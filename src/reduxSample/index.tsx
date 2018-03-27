@@ -65,10 +65,6 @@ class App extends React.Component<AppProps, {}> {
   }
 }
 
-const mapStateToProps = (state: State) => ({ fetchData:state.fetchData });
-
-const TotalApp = connect(mapStateToProps)(App);
-
 interface State {
 
   fetchData: any
@@ -78,6 +74,10 @@ interface State {
 const initialState: State = {
   fetchData:{}
 };
+
+const TotalApp = connect(
+  (state: State) => ({ fetchData:state.fetchData })
+)(App);
 
 const reducer = (state:State=initialState, action: Actions | any):State => {
 
@@ -95,15 +95,8 @@ const reducer = (state:State=initialState, action: Actions | any):State => {
 
 }
 
-
 const store = createStore( reducer );
 
-export default class example extends React.Component<{}, {}> {
+const example = (props:any) =>(<Provider store={store}><TotalApp /></Provider>);
 
-  render() {
-
-    return <Provider store={store}><TotalApp /></Provider>
-
-  }
-
-}
+export default example;
