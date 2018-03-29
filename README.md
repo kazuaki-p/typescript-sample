@@ -18,8 +18,8 @@ http://localhost:6006/
 ```
 
 +- template
-|   +- redux    Redux is used.
-|   +- mobx     Mobx is used.
+|   +- redux    Redux used.
+|   +- mobx     Mobx used.
 
 
 ```
