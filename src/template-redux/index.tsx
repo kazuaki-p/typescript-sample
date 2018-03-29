@@ -1,5 +1,5 @@
 import React from "react";
-import { createStore, Action, Reducer } from 'redux';
+import { createStore, Action, Reducer, Dispatch } from 'redux';
 import { Provider, connect } from 'react-redux';
 
 type Actions = fetchAction;
@@ -17,25 +17,9 @@ const fetchData = (json: any): fetchAction => ({
   type: ActionTypes.RECEIVE_FETCH_DATA, response: json
 })
 
-
-const fetchApiData = (dispatch: any) => {
-
-  return fetch('http://localhost:3000/example/a', {credentials: 'same-origin'})
-           .then(response => {
-             if (response.status < 400) {
-               return response.json().then((json)=>dispatch(fetchData(json)));
-             } else {
-               console.log(response);
-             }
-           })
-}
-
-interface AppProps {
-
-  fetchData: any;
-  dispatch: any;
-
-}
+type AppProps = {
+  actions: ActionDispatcher;
+} & State;
 
 class App extends React.Component<AppProps, {}> {
 
@@ -47,9 +31,7 @@ class App extends React.Component<AppProps, {}> {
 
   componentWillMount() {
 
-    const {dispatch} = this.props;
-
-    fetchApiData(dispatch);
+    this.props.actions.fetchData();
 
   }
 
@@ -75,8 +57,27 @@ const initialState: State = {
   fetchData:{}
 };
 
+class ActionDispatcher {
+
+  constructor(private dispatch: (action: Actions) => void) {}
+
+  public fetchData() {
+
+    return fetch('http://localhost:3000/example/a', {credentials: 'same-origin'})
+      .then(response => {
+        if (response.status < 400) {
+          return response.json().then((json)=>this.dispatch(fetchData(json)));
+        } else {
+          console.log(response);
+        }
+      })
+
+  }
+}
+
 const TotalApp = connect(
-  (state: State) => ({ fetchData:state.fetchData })
+  (state: State) => ({ fetchData:state.fetchData }),
+  (dispatch: Dispatch<Actions>) => ({actions: new ActionDispatcher(dispatch)})
 )(App);
 
 const reducer = (state:State=initialState, action: Actions | any):State => {

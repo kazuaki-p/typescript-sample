@@ -2,8 +2,8 @@ import React from 'react';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react'
 
-const fetchApiData = () => {
-    // url部分は変えてね。
+const fetchData = () => {
+
     return　fetch('http://localhost:3000/example/a', {credentials: 'same-origin'})
                 .then(response => {
                     if (response.status < 400) {
@@ -20,7 +20,7 @@ class App extends React.Component<{data:any},{}> {
         super(props);
     }
     componentWillMount() {
-        fetchApiData();
+        fetchData();
     }
     render() {
         const {　data } = this.props;

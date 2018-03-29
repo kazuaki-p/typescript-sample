@@ -1,14 +1,25 @@
 # typescript-sample
 
-node.jsインストールし、起動。npmであれば以下の通り。
+node.jsインストール後、以下を実行する。
 
 ```
 
 npm install
 
-npm run dev
+npm run storybook
 
 
 ```
 
-http://localhost:8080/
+http://localhost:6006/
+
+# components
+
+```
+
++- template
+|   +- redux    Redux is used.
+|   +- mobx     Mobx is used.
+
+
+```
